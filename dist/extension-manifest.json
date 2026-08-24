@@ -5,17 +5,36 @@
     {
       "opcode": "connectPasoriBlock",
       "blockType": "COMMAND",
+      "arguments": [
+        {
+          "id": "READER_ID",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "opcode": "connectedPasoriCount",
+      "blockType": "REPORTER",
       "arguments": []
     },
     {
       "opcode": "lastIdmReporter",
       "blockType": "REPORTER",
-      "arguments": []
+      "arguments": [
+        {
+          "id": "READER_ID",
+          "type": "STRING"
+        }
+      ]
     },
     {
       "opcode": "waitForNfcIdmSetRuntimeVar",
       "blockType": "COMMAND",
       "arguments": [
+        {
+          "id": "READER_ID",
+          "type": "STRING"
+        },
         {
           "id": "RUNTIME_VAR",
           "type": "STRING"
@@ -28,6 +47,10 @@
       "arguments": [
         {
           "id": "MESSAGE",
+          "type": "STRING"
+        },
+        {
+          "id": "READER_ID",
           "type": "STRING"
         },
         {

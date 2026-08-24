@@ -3,8 +3,10 @@
 [日本語](README.ja.md)
 
 WebUSB PaSoRi is a TurboWarp extension capability for reading NFC card IDm and
-PMm values from Sony PaSoRi readers through WebUSB. It intentionally starts with
-the narrow PaSoRi card ID use case rather than general NFC or NDEF access.
+PMm values from Sony PaSoRi readers through WebUSB. Multiple readers can be
+connected under project-local names, allowing a project to detect which PaSoRi
+reader saw which NFC tag. It intentionally starts with the narrow PaSoRi card ID
+use case rather than general NFC or NDEF access.
 
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-webusb-pasori/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/)**
@@ -28,44 +30,57 @@ The generated JavaScript is a single, non-minified TurboWarp extension file with
 
 <!-- BEGIN GENERATED BLOCKS -->
 
-### `connect PaSoRi`
+### `connect PaSoRi as [READER_ID]`
 
-Requests permission and connects a Sony PaSoRi reader over WebUSB.
+Requests permission and connects a Sony PaSoRi reader over WebUSB with a project-local reader name.
 
 | Property | Value |
 |---|---|
 | Type | Command |
 | Opcode | `connectPasoriBlock` |
+| `READER_ID` | String, default: `default` |
 
-### `wait for NFC card set runtime var [RUNTIME_VAR] to IDm`
+### `wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm`
 
-Waits until a card is read and stores its IDm in a runtime variable.
+Waits until a card is read on the named PaSoRi and stores its IDm in a runtime variable.
 
 | Property | Value |
 |---|---|
 | Type | Command |
 | Opcode | `waitForNfcIdmSetRuntimeVar` |
+| `READER_ID` | String, default: `default` |
 | `RUNTIME_VAR` | String, default: `nfcIdm` |
 
-### `wait for NFC card set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]`
+### `wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]`
 
-Waits until a card is read, stores its IDm, and broadcasts a message.
+Waits until a card is read on the named PaSoRi, stores its IDm, and broadcasts a message.
 
 | Property | Value |
 |---|---|
 | Type | Command |
 | Opcode | `waitForNfcIdmSetRuntimeVarAndBroadcast` |
+| `READER_ID` | String, default: `default` |
 | `RUNTIME_VAR` | String, default: `nfcIdm` |
 | `MESSAGE` | String, default: `nfcScanned` |
 
-### `last NFC IDm`
+### `last NFC IDm on PaSoRi [READER_ID]`
 
-Returns the most recent NFC IDm read by this extension.
+Returns the most recent NFC IDm read by the named PaSoRi.
 
 | Property | Value |
 |---|---|
 | Type | Reporter |
 | Opcode | `lastIdmReporter` |
+| `READER_ID` | String, default: `default` |
+
+### `connected PaSoRi count`
+
+Returns the number of PaSoRi readers connected through this extension.
+
+| Property | Value |
+|---|---|
+| Type | Reporter |
+| Opcode | `connectedPasoriCount` |
 
 <!-- END GENERATED BLOCKS -->
 
@@ -79,8 +94,17 @@ npm run check
 ## Runtime API
 
 Other unsandboxed extensions can access `Scratch.vm.runtime.ext_kubohiroyawebusbpasori`.
-Use `connectPasori()` to request and retain a PaSoRi device, `waitForNfcIdm({signal})`
-to wait for a card ID, or `PasoriDevice.readCardInfo()` for IDm/PMm details.
+Use `connectPasori({readerId})` to request and retain a PaSoRi device under a
+project-local reader name, `waitForNfcIdm({readerId, signal})` to wait for a
+card ID on a specific reader, or `PasoriDevice.readCardInfo()` for IDm/PMm
+details.
+
+```js
+await pasori.connectPasori({readerId: 'left'});
+await pasori.connectPasori({readerId: 'right'});
+const leftIdm = await pasori.waitForNfcIdm({readerId: 'left', signal});
+const rightIdm = await pasori.waitForNfcIdm({readerId: 'right', signal});
+```
 
 For continuous rebuilding during development:
 

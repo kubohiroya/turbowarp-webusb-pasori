@@ -24,6 +24,7 @@ export interface PasoriCardInfo {
 }
 
 export interface WaitForNfcIdmOptions {
+  readerId?: string;
   signal?: AbortSignal;
   intervalMilliseconds?: number;
 }
@@ -31,6 +32,7 @@ export interface WaitForNfcIdmOptions {
 const blockDefinitions = definitions.blocks as readonly BlockDefinition[];
 const sonyVendorId = 0x054c;
 const ack = Object.freeze([0x00, 0x00, 0xff, 0x00, 0xff, 0x00]);
+const defaultReaderId = 'default';
 
 function hex(bytes: readonly number[]): string {
   return bytes.map((value) => value.toString(16).padStart(2, '0')).join('').toUpperCase();
@@ -48,6 +50,11 @@ function webUsb(): USB {
     throw new Error('WebUSB PaSoRi requires navigator.usb.requestDevice.');
   }
   return usb;
+}
+
+function normalizeReaderId(value: unknown): string {
+  const text = String(value ?? '').trim();
+  return text || defaultReaderId;
 }
 
 export class PasoriDevice {
@@ -125,8 +132,8 @@ export class PasoriDevice {
 }
 
 export class WebUsbPasoriExtension implements TurboWarpExtension {
-  private device: PasoriDevice | null = null;
-  private lastIdm = '';
+  private readonly devices = new Map<string, PasoriDevice>();
+  private readonly lastIdmByReader = new Map<string, string>();
 
   public constructor() {
     Scratch.vm.runtime.ext_kubohiroyawebusbpasori = this;
@@ -140,42 +147,48 @@ export class WebUsbPasoriExtension implements TurboWarpExtension {
     };
   }
 
-  public lastIdmReporter(): string {
-    return this.lastIdm;
+  public lastIdmReporter(args: {READER_ID?: unknown} = {}): string {
+    return this.lastIdmByReader.get(normalizeReaderId(args.READER_ID)) ?? '';
   }
 
-  public async connectPasoriBlock(): Promise<void> {
-    await this.connectPasori();
+  public async connectPasoriBlock(args: {READER_ID?: unknown} = {}): Promise<void> {
+    await this.connectPasori({readerId: normalizeReaderId(args.READER_ID)});
   }
 
-  public async waitForNfcIdmSetRuntimeVar(args: {RUNTIME_VAR: unknown}): Promise<void> {
-    const idm = await this.waitForNfcIdm();
+  public async waitForNfcIdmSetRuntimeVar(
+    args: {READER_ID?: unknown; RUNTIME_VAR: unknown}
+  ): Promise<void> {
+    const idm = await this.waitForNfcIdm({readerId: normalizeReaderId(args.READER_ID)});
     this.writeRuntimeVariable(args.RUNTIME_VAR, idm);
   }
 
   public async waitForNfcIdmSetRuntimeVarAndBroadcast(
-    args: {RUNTIME_VAR: unknown; MESSAGE: unknown}
+    args: {READER_ID?: unknown; RUNTIME_VAR: unknown; MESSAGE: unknown}
   ): Promise<void> {
-    const idm = await this.waitForNfcIdm();
+    const idm = await this.waitForNfcIdm({readerId: normalizeReaderId(args.READER_ID)});
     this.writeRuntimeVariable(args.RUNTIME_VAR, idm);
     const message = String(args.MESSAGE ?? '').trim();
     if (!message) throw new Error('MESSAGE must be specified.');
     this.runtime().startHats?.('event_whenbroadcastreceived', {BROADCAST_OPTION: message});
   }
 
-  public async connectPasori(): Promise<PasoriDevice> {
-    if (this.device) return this.device;
+  public async connectPasori(options: {readerId?: string} = {}): Promise<PasoriDevice> {
+    const readerId = normalizeReaderId(options.readerId);
+    const existing = this.devices.get(readerId);
+    if (existing) return existing;
     const device = await webUsb().requestDevice({filters: [{vendorId: sonyVendorId}]});
     await device.open();
     if (device.configuration === null) await device.selectConfiguration(1);
     await device.claimInterface(0);
-    this.device = new PasoriDevice(device);
-    return this.device;
+    const pasori = new PasoriDevice(device);
+    this.devices.set(readerId, pasori);
+    return pasori;
   }
 
   public async waitForNfcIdm(options: WaitForNfcIdmOptions = {}): Promise<string> {
+    const readerId = normalizeReaderId(options.readerId);
     if (options.signal?.aborted) throw abortError();
-    const device = await this.connectPasori();
+    const device = await this.connectPasori({readerId});
     const intervalMilliseconds = Math.max(100, options.intervalMilliseconds ?? 250);
     return new Promise((resolve, reject) => {
       let timer: ReturnType<typeof setTimeout> | undefined;
@@ -196,7 +209,7 @@ export class WebUsbPasoriExtension implements TurboWarpExtension {
               return;
             }
             if (idm) {
-              this.lastIdm = idm;
+              this.lastIdmByReader.set(readerId, idm);
               cleanup();
               resolve(idm);
               return;
@@ -211,6 +224,10 @@ export class WebUsbPasoriExtension implements TurboWarpExtension {
       options.signal?.addEventListener('abort', onAbort, {once: true});
       tick();
     });
+  }
+
+  public connectedPasoriCount(): number {
+    return this.devices.size;
   }
 
   private toScratchBlock(block: BlockDefinition): Record<string, unknown> {

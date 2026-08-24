@@ -4,25 +4,29 @@
     {
       "opcode": "connectPasoriBlock",
       "blockType": "COMMAND",
-      "text": "connect PaSoRi",
-      "description": "Requests permission and connects a Sony PaSoRi reader over WebUSB.",
-      "arguments": {}
+      "text": "connect PaSoRi as [READER_ID]",
+      "description": "Requests permission and connects a Sony PaSoRi reader over WebUSB with a project-local reader name.",
+      "arguments": {
+        "READER_ID": {"type": "STRING", "defaultValue": "default"}
+      }
     },
     {
       "opcode": "waitForNfcIdmSetRuntimeVar",
       "blockType": "COMMAND",
-      "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm",
-      "description": "Waits until a card is read and stores its IDm in a runtime variable.",
+      "text": "wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm",
+      "description": "Waits until a card is read on the named PaSoRi and stores its IDm in a runtime variable.",
       "arguments": {
+        "READER_ID": {"type": "STRING", "defaultValue": "default"},
         "RUNTIME_VAR": {"type": "STRING", "defaultValue": "nfcIdm"}
       }
     },
     {
       "opcode": "waitForNfcIdmSetRuntimeVarAndBroadcast",
       "blockType": "COMMAND",
-      "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]",
-      "description": "Waits until a card is read, stores its IDm, and broadcasts a message.",
+      "text": "wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]",
+      "description": "Waits until a card is read on the named PaSoRi, stores its IDm, and broadcasts a message.",
       "arguments": {
+        "READER_ID": {"type": "STRING", "defaultValue": "default"},
         "RUNTIME_VAR": {"type": "STRING", "defaultValue": "nfcIdm"},
         "MESSAGE": {"type": "STRING", "defaultValue": "nfcScanned"}
       }
@@ -30,8 +34,17 @@
     {
       "opcode": "lastIdmReporter",
       "blockType": "REPORTER",
-      "text": "last NFC IDm",
-      "description": "Returns the most recent NFC IDm read by this extension.",
+      "text": "last NFC IDm on PaSoRi [READER_ID]",
+      "description": "Returns the most recent NFC IDm read by the named PaSoRi.",
+      "arguments": {
+        "READER_ID": {"type": "STRING", "defaultValue": "default"}
+      }
+    },
+    {
+      "opcode": "connectedPasoriCount",
+      "blockType": "REPORTER",
+      "text": "connected PaSoRi count",
+      "description": "Returns the number of PaSoRi readers connected through this extension.",
       "arguments": {}
     }
   ]

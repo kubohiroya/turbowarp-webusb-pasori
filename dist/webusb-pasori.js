@@ -12,7 +12,7 @@
     name: "WebUSB PaSoRi"
   };
   const extensionName = "WebUSB PaSoRi";
-  const blocks = [{ "opcode": "connectPasoriBlock", "blockType": "COMMAND", "text": "connect PaSoRi", "description": "Requests permission and connects a Sony PaSoRi reader over WebUSB.", "arguments": {} }, { "opcode": "waitForNfcIdmSetRuntimeVar", "blockType": "COMMAND", "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm", "description": "Waits until a card is read and stores its IDm in a runtime variable.", "arguments": { "RUNTIME_VAR": { "type": "STRING", "defaultValue": "nfcIdm" } } }, { "opcode": "waitForNfcIdmSetRuntimeVarAndBroadcast", "blockType": "COMMAND", "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]", "description": "Waits until a card is read, stores its IDm, and broadcasts a message.", "arguments": { "RUNTIME_VAR": { "type": "STRING", "defaultValue": "nfcIdm" }, "MESSAGE": { "type": "STRING", "defaultValue": "nfcScanned" } } }, { "opcode": "lastIdmReporter", "blockType": "REPORTER", "text": "last NFC IDm", "description": "Returns the most recent NFC IDm read by this extension.", "arguments": {} }];
+  const blocks = [{ "opcode": "connectPasoriBlock", "blockType": "COMMAND", "text": "connect PaSoRi as [READER_ID]", "description": "Requests permission and connects a Sony PaSoRi reader over WebUSB with a project-local reader name.", "arguments": { "READER_ID": { "type": "STRING", "defaultValue": "default" } } }, { "opcode": "waitForNfcIdmSetRuntimeVar", "blockType": "COMMAND", "text": "wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm", "description": "Waits until a card is read on the named PaSoRi and stores its IDm in a runtime variable.", "arguments": { "READER_ID": { "type": "STRING", "defaultValue": "default" }, "RUNTIME_VAR": { "type": "STRING", "defaultValue": "nfcIdm" } } }, { "opcode": "waitForNfcIdmSetRuntimeVarAndBroadcast", "blockType": "COMMAND", "text": "wait for NFC card on PaSoRi [READER_ID] set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]", "description": "Waits until a card is read on the named PaSoRi, stores its IDm, and broadcasts a message.", "arguments": { "READER_ID": { "type": "STRING", "defaultValue": "default" }, "RUNTIME_VAR": { "type": "STRING", "defaultValue": "nfcIdm" }, "MESSAGE": { "type": "STRING", "defaultValue": "nfcScanned" } } }, { "opcode": "lastIdmReporter", "blockType": "REPORTER", "text": "last NFC IDm on PaSoRi [READER_ID]", "description": "Returns the most recent NFC IDm read by the named PaSoRi.", "arguments": { "READER_ID": { "type": "STRING", "defaultValue": "default" } } }, { "opcode": "connectedPasoriCount", "blockType": "REPORTER", "text": "connected PaSoRi count", "description": "Returns the number of PaSoRi readers connected through this extension.", "arguments": {} }];
   const definitions = {
     extensionName,
     blocks
@@ -20,6 +20,7 @@
   const blockDefinitions = definitions.blocks;
   const sonyVendorId = 1356;
   const ack = Object.freeze([0, 0, 255, 0, 255, 0]);
+  const defaultReaderId = "default";
   function hex(bytes) {
     return bytes.map((value) => value.toString(16).padStart(2, "0")).join("").toUpperCase();
   }
@@ -34,6 +35,10 @@
       throw new Error("WebUSB PaSoRi requires navigator.usb.requestDevice.");
     }
     return usb;
+  }
+  function normalizeReaderId(value) {
+    const text = String(value ?? "").trim();
+    return text || defaultReaderId;
   }
   class PasoriDevice {
     constructor(device) {
@@ -174,8 +179,8 @@
   }
   class WebUsbPasoriExtension {
     constructor() {
-      this.device = null;
-      this.lastIdm = "";
+      this.devices = /* @__PURE__ */ new Map();
+      this.lastIdmByReader = /* @__PURE__ */ new Map();
       Scratch.vm.runtime.ext_kubohiroyawebusbpasori = this;
     }
     getInfo() {
@@ -185,35 +190,39 @@
         blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
       };
     }
-    lastIdmReporter() {
-      return this.lastIdm;
+    lastIdmReporter(args = {}) {
+      return this.lastIdmByReader.get(normalizeReaderId(args.READER_ID)) ?? "";
     }
-    async connectPasoriBlock() {
-      await this.connectPasori();
+    async connectPasoriBlock(args = {}) {
+      await this.connectPasori({ readerId: normalizeReaderId(args.READER_ID) });
     }
     async waitForNfcIdmSetRuntimeVar(args) {
-      const idm = await this.waitForNfcIdm();
+      const idm = await this.waitForNfcIdm({ readerId: normalizeReaderId(args.READER_ID) });
       this.writeRuntimeVariable(args.RUNTIME_VAR, idm);
     }
     async waitForNfcIdmSetRuntimeVarAndBroadcast(args) {
-      const idm = await this.waitForNfcIdm();
+      const idm = await this.waitForNfcIdm({ readerId: normalizeReaderId(args.READER_ID) });
       this.writeRuntimeVariable(args.RUNTIME_VAR, idm);
       const message = String(args.MESSAGE ?? "").trim();
       if (!message) throw new Error("MESSAGE must be specified.");
       this.runtime().startHats?.("event_whenbroadcastreceived", { BROADCAST_OPTION: message });
     }
-    async connectPasori() {
-      if (this.device) return this.device;
+    async connectPasori(options = {}) {
+      const readerId = normalizeReaderId(options.readerId);
+      const existing = this.devices.get(readerId);
+      if (existing) return existing;
       const device = await webUsb().requestDevice({ filters: [{ vendorId: sonyVendorId }] });
       await device.open();
       if (device.configuration === null) await device.selectConfiguration(1);
       await device.claimInterface(0);
-      this.device = new PasoriDevice(device);
-      return this.device;
+      const pasori = new PasoriDevice(device);
+      this.devices.set(readerId, pasori);
+      return pasori;
     }
     async waitForNfcIdm(options = {}) {
+      const readerId = normalizeReaderId(options.readerId);
       if (options.signal?.aborted) throw abortError();
-      const device = await this.connectPasori();
+      const device = await this.connectPasori({ readerId });
       const intervalMilliseconds = Math.max(100, options.intervalMilliseconds ?? 250);
       return new Promise((resolve, reject) => {
         let timer;
@@ -232,7 +241,7 @@
               return;
             }
             if (idm) {
-              this.lastIdm = idm;
+              this.lastIdmByReader.set(readerId, idm);
               cleanup();
               resolve(idm);
               return;
@@ -246,6 +255,9 @@
         options.signal?.addEventListener("abort", onAbort, { once: true });
         tick();
       });
+    }
+    connectedPasoriCount() {
+      return this.devices.size;
     }
     toScratchBlock(block) {
       return {
