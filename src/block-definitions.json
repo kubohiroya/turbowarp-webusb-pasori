@@ -1,0 +1,38 @@
+{
+  "extensionName": "WebUSB PaSoRi",
+  "blocks": [
+    {
+      "opcode": "connectPasoriBlock",
+      "blockType": "COMMAND",
+      "text": "connect PaSoRi",
+      "description": "Requests permission and connects a Sony PaSoRi reader over WebUSB.",
+      "arguments": {}
+    },
+    {
+      "opcode": "waitForNfcIdmSetRuntimeVar",
+      "blockType": "COMMAND",
+      "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm",
+      "description": "Waits until a card is read and stores its IDm in a runtime variable.",
+      "arguments": {
+        "RUNTIME_VAR": {"type": "STRING", "defaultValue": "nfcIdm"}
+      }
+    },
+    {
+      "opcode": "waitForNfcIdmSetRuntimeVarAndBroadcast",
+      "blockType": "COMMAND",
+      "text": "wait for NFC card set runtime var [RUNTIME_VAR] to IDm and broadcast [MESSAGE]",
+      "description": "Waits until a card is read, stores its IDm, and broadcasts a message.",
+      "arguments": {
+        "RUNTIME_VAR": {"type": "STRING", "defaultValue": "nfcIdm"},
+        "MESSAGE": {"type": "STRING", "defaultValue": "nfcScanned"}
+      }
+    },
+    {
+      "opcode": "lastIdmReporter",
+      "blockType": "REPORTER",
+      "text": "last NFC IDm",
+      "description": "Returns the most recent NFC IDm read by this extension.",
+      "arguments": {}
+    }
+  ]
+}

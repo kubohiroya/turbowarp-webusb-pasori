@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="デスクトップブラウザでNFCカードのIDm/PMmを読むWebUSB PaSoRi TurboWarp拡張のガイド。">
+  <title>WebUSB PaSoRi ガイド</title>
+  <link rel="canonical" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/">
+  <link rel="alternate" hreflang="en" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/">
+  <link rel="alternate" hreflang="ja" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/">
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="./">WebUSB PaSoRi</a>
+    <nav class="nav" aria-label="Sections"><a href="#blocks">ブロック</a><a href="#api">API</a><a href="#limits">制約</a></nav>
+    <nav class="lang" aria-label="Language"><a href="../">English</a><a href="./" aria-current="page">日本語</a></nav>
+  </div></header>
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">TurboWarp NFC input</p><h1>PCブラウザからPaSoRiのカードIDを読む。</h1>
+      <p class="lede">WebUSB PaSoRiはSony PaSoRiリーダーに接続し、NFCカードのIDm/PMmを読み取り、IDmをTemporary Variablesへ書き込めます。</p></div>
+      <div class="panel"><span class="block">connect PaSoRi</span><span class="block">wait for NFC card set runtime var nfcIdm to IDm</span><span class="block">last NFC IDm</span></div>
+    </section>
+    <section class="section" id="blocks"><h2>ブロック</h2><div class="grid">
+      <article class="card"><h3>connect PaSoRi</h3><p>WebUSBのデバイス選択を表示し、PaSoRiインターフェイスをclaimします。</p></article>
+      <article class="card"><h3>wait for NFC card set runtime var</h3><p>カードが置かれるまで読み取りを繰り返し、IDmを保存します。</p></article>
+      <article class="card"><h3>last NFC IDm</h3><p>最後に読み取ったIDmを返します。</p></article>
+    </div></section>
+    <section class="section" id="api"><h2>API capability</h2><p>unsandboxed拡張は`Scratch.vm.runtime.ext_kubohiroyawebusbpasori`を参照できます。</p>
+<pre><code>const device = await pasori.connectPasori();
+const card = await device.readCardInfo();
+const idm = await pasori.waitForNfcIdm({signal});</code></pre></section>
+    <section class="section" id="limits"><h2>要件と制約</h2><p class="note">この拡張はSony PaSoRiのカードID読み取りに範囲を絞っています。WebUSBには安全なコンテキストとユーザーのデバイス許可が必要です。OSドライバやブラウザの保護インターフェイス制限により`claimInterface(0)`が失敗する環境があります。</p></section>
+  </main>
+  <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-webusb-pasori">GitHub</a></footer>
+</body>
+</html>

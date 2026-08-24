@@ -1,0 +1,41 @@
+{
+  "formatVersion": 1,
+  "id": "kubohiroyawebusbpasori",
+  "blocks": [
+    {
+      "opcode": "connectPasoriBlock",
+      "blockType": "COMMAND",
+      "arguments": []
+    },
+    {
+      "opcode": "lastIdmReporter",
+      "blockType": "REPORTER",
+      "arguments": []
+    },
+    {
+      "opcode": "waitForNfcIdmSetRuntimeVar",
+      "blockType": "COMMAND",
+      "arguments": [
+        {
+          "id": "RUNTIME_VAR",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "opcode": "waitForNfcIdmSetRuntimeVarAndBroadcast",
+      "blockType": "COMMAND",
+      "arguments": [
+        {
+          "id": "MESSAGE",
+          "type": "STRING"
+        },
+        {
+          "id": "RUNTIME_VAR",
+          "type": "STRING"
+        }
+      ]
+    }
+  ],
+  "menus": []
+}
