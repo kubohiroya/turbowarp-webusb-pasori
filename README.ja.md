@@ -1,8 +1,8 @@
-# TurboWarp WebUSB PaSoRi
+# TurboWarp-WebUSB-PaSoRi
 
 [English](README.md)
 
-TurboWarp WebUSB PaSoRiは、Sony PaSoRiリーダーからWebUSB経由でNFCカードのIDm/PMmを読み取るTurboWarp capability extensionです。
+TurboWarp-WebUSB-PaSoRiは、Sony PaSoRiリーダーからWebUSB経由でNFCカードのIDm/PMmを読み取るTurboWarp capability extensionです。
 
 **[English guide](https://kubohiroya.github.io/turbowarp-webusb-pasori/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/)**
