@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="デスクトップブラウザで名前付きPaSoRiからNFCカードのIDm/PMmを読むWebUSB PaSoRi TurboWarp拡張のガイド。">
-  <title>WebUSB PaSoRi ガイド</title>
+  <meta name="description" content="デスクトップブラウザで名前付きPaSoRiからNFCカードのIDm/PMmを読むTurboWarp WebUSB PaSoRi拡張のガイド。">
+  <title>TurboWarp WebUSB PaSoRi ガイド</title>
   <link rel="canonical" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/">
   <link rel="alternate" hreflang="en" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/">
   <link rel="alternate" hreflang="ja" href="https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/">
@@ -12,16 +12,19 @@
 </head>
 <body>
   <header class="topbar"><div class="topbar-inner">
-    <a class="brand" href="./">WebUSB PaSoRi</a>
-    <nav class="nav" aria-label="Sections"><a href="#blocks">ブロック</a><a href="#api">API</a><a href="#limits">制約</a></nav>
+    <a class="brand" href="./">TurboWarp WebUSB PaSoRi</a>
+    <nav class="nav" aria-label="Sections"><a href="#install">Install</a><a href="#blocks">ブロック</a><a href="#api">API</a><a href="#limits">制約</a></nav>
     <nav class="lang" aria-label="Language"><a href="../">English</a><a href="./" aria-current="page">日本語</a></nav>
   </div></header>
   <main>
     <section class="hero">
-      <div><p class="eyebrow">TurboWarp NFC input</p><h1>どのPaSoRiがどのタグを読んだかを扱う。</h1>
-      <p class="lede">WebUSB PaSoRiはSony PaSoRiリーダーを作品内の名前で接続し、NFCカードのIDm/PMmを読み取り、IDmをTemporary Variablesへ書き込めます。</p></div>
+      <div><p class="eyebrow">TurboWarp NFC input</p><h1>TurboWarp WebUSB PaSoRi</h1>
+      <p class="lede">Sony PaSoRiリーダーを作品内の名前で接続し、NFCカードのIDm/PMmを読み取り、IDmをTemporary Variablesへ書き込めます。</p></div>
       <div class="panel"><span class="block">connect PaSoRi as left</span><span class="block">wait on PaSoRi right</span><span class="block">last NFC IDm on left</span></div>
     </section>
+    <section class="section" id="install"><h2>インストール</h2><p>User guide: <a href="https://kubohiroya.github.io/turbowarp-webusb-pasori/">https://kubohiroya.github.io/turbowarp-webusb-pasori/</a></p>
+<pre><code>pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.2.0</code></pre>
+<pre><code>https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.2.0/dist/webusb-pasori.js</code></pre></section>
     <section class="section" id="blocks"><h2>ブロック</h2><div class="grid">
       <article class="card"><h3>connect PaSoRi as</h3><p>WebUSBのデバイス選択を表示し、選択したreaderを`left`や`right`などの名前へ割り当てます。</p></article>
       <article class="card"><h3>wait for NFC card</h3><p>指定readerでカードが置かれるまで読み取りを繰り返し、IDmを保存します。</p></article>
@@ -32,7 +35,7 @@
 await pasori.connectPasori({readerId: 'right'});
 const card = await left.readCardInfo();
 const idm = await pasori.waitForNfcIdm({readerId: 'left', signal});</code></pre></section>
-    <section class="section" id="limits"><h2>要件と制約</h2><p class="note">この拡張はSony PaSoRiのカードID読み取りに範囲を絞っています。WebUSBには安全なコンテキストとユーザーのデバイス許可が必要です。OSドライバやブラウザの保護インターフェイス制限により`claimInterface(0)`が失敗する環境があります。</p></section>
+    <section class="section" id="limits"><h2>要件と制約</h2><p class="note">この拡張はSony PaSoRiのカードID読み取りに範囲を絞っています。WebUSBには安全なコンテキスト、browser support、user gesture、device permissionが必要です。OSドライバやブラウザの保護インターフェイス制限により`claimInterface(0)`が失敗する環境があります。</p></section>
   </main>
   <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-webusb-pasori">GitHub</a></footer>
 </body>
