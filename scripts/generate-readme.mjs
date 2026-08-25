@@ -1,4 +1,5 @@
 import {readFile, writeFile} from 'node:fs/promises';
+import process from 'node:process';
 
 const START = '<!-- BEGIN GENERATED BLOCKS -->';
 const END = '<!-- END GENERATED BLOCKS -->';
@@ -20,6 +21,15 @@ const next = readme.replace(
   new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`),
   replacement
 );
+
+if (process.argv.includes('--check')) {
+  if (next !== readme) {
+    throw new Error('README.md generated block section is out of date.');
+  }
+  process.stdout.write('README.md generated block section is up to date.\n');
+  process.exit(0);
+}
+
 await writeFile(readmeUrl, next);
 
 function renderBlock(block) {

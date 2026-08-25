@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "productName": "TurboWarp WebUSB PaSoRi",
+  "packageType": "capability-extension",
+  "licensePolicy": "mpl-2.0",
+  "packageManager": "pnpm",
+  "homepage": "pages",
+  "node": {
+    "minimum": "22"
+  },
+  "extension": {
+    "id": "kubohiroyawebusbpasori",
+    "standaloneBundle": "dist/webusb-pasori.js",
+    "manifest": "dist/extension-manifest.json"
+  },
+  "runtimeApi": {
+    "namespace": "ext_kubohiroyawebusbpasori",
+    "readerOwnership": "project-local reader names",
+    "waitSemantics": "waitForNfcIdm waits for a named reader and supports AbortSignal"
+  },
+  "exceptions": {
+    "webUsbRequiresUserGesture": true,
+    "browserDevicePermission": true,
+    "protectedInterfaceMayFail": true
+  }
+}
+

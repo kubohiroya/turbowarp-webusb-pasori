@@ -1,10 +1,15 @@
 {
   "name": "@kubohiroya/turbowarp-webusb-pasori",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
+  "license": "MPL-2.0",
   "description": "A TurboWarp capability extension for reading Sony PaSoRi NFC card IDs through WebUSB.",
   "type": "module",
   "homepage": "https://kubohiroya.github.io/turbowarp-webusb-pasori/",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kubohiroya/turbowarp-webusb-pasori.git"
@@ -18,6 +23,7 @@
   },
   "files": [
     "dist/",
+    "CHANGELOG.md",
     "README.md",
     "README.ja.md",
     "LICENSE"
@@ -35,10 +41,13 @@
     "lint": "eslint src tests vite.config.ts",
     "test": "vitest run",
     "docs": "node scripts/generate-readme.mjs",
-    "docs:check": "npm run docs && git diff --exit-code -- README.md",
+    "docs:check": "node scripts/generate-readme.mjs --check",
     "docs:pages:check": "node scripts/check-pages.mjs",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run docs:check && npm run docs:pages:check && npm run check:dist",
-    "check:dist": "npm run build && node scripts/check-dist.mjs"
+    "repo:check": "node scripts/check-repo.mjs",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist && pnpm run repo:check",
+    "check:dist": "pnpm run build && node scripts/check-dist.mjs",
+    "release:check": "pnpm publish --dry-run --access public --no-git-checks",
+    "prepack": "pnpm run check"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
