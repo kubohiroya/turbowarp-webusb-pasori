@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "productName": "TurboWarp WebUSB PaSoRi",
+  "productName": "TurboWarp-WebUSB-PaSoRi",
   "packageType": "capability-extension",
   "licensePolicy": "mpl-2.0",
   "packageManager": "pnpm",
