@@ -8,7 +8,7 @@
   "homepage": "https://kubohiroya.github.io/turbowarp-webusb-pasori/",
   "packageManager": "pnpm@11.11.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18.0"
   },
   "repository": {
     "type": "git",
@@ -40,12 +40,12 @@
     "build": "vite build",
     "lint": "eslint src tests vite.config.ts",
     "test": "vitest run",
-    "docs": "node scripts/generate-readme.mjs",
-    "docs:check": "node scripts/generate-readme.mjs --check",
-    "docs:pages:check": "node scripts/check-pages.mjs",
-    "repo:check": "node scripts/check-repo.mjs",
+    "docs": "node scripts/generate-readme.ts",
+    "docs:check": "node scripts/generate-readme.ts --check",
+    "docs:pages:check": "node scripts/check-pages.ts",
+    "repo:check": "node scripts/check-repo.ts",
     "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist && pnpm run repo:check",
-    "check:dist": "pnpm run build && node scripts/check-dist.mjs",
+    "check:dist": "pnpm run build && node scripts/check-dist.ts",
     "release:check": "pnpm publish --dry-run --access public --no-git-checks",
     "prepack": "pnpm run check"
   },
