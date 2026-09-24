@@ -2,11 +2,64 @@ import {execFile} from 'node:child_process';
 import {readFile} from 'node:fs/promises';
 import {promisify} from 'node:util';
 
-const execFileAsync = promisify(execFile);
-const errors = [];
+interface PackageMetadata {
+  name: string;
+  version: string;
+  description?: string;
+  author?: string;
+  license?: string;
+  homepage?: string;
+  packageManager?: string;
+  engines?: {node?: string};
+  repository?: {url?: string};
+  bugs?: {url?: string};
+  files?: string[];
+  bin?: string | Record<string, string>;
+  main?: string;
+  types?: string;
+  scripts?: Record<string, string>;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
 
-const packageMetadata = JSON.parse(await readFile('package.json', 'utf8'));
-const policy = JSON.parse(await readFile('repo-policy.json', 'utf8'));
+interface RepoPolicy {
+  schemaVersion: number;
+  productName: string;
+  packageType: string;
+  licensePolicy: string;
+  packageManager: string;
+  homepage: string;
+  node: {
+    minimum: string;
+  };
+  extension: {
+    id: string;
+    standaloneBundle: string;
+    manifest: string;
+  };
+  runtimeApi: {
+    namespace: string;
+    readerOwnership: string;
+    waitSemantics: string;
+  };
+  exceptions: {
+    webUsbRequiresUserGesture: boolean;
+    browserDevicePermission: boolean;
+    protectedInterfaceMayFail: boolean;
+  };
+}
+
+interface PackResult {
+  version: string;
+  files: {path: string}[];
+}
+
+const execFileAsync = promisify(execFile);
+const errors: string[] = [];
+
+const packageMetadata = JSON.parse(await readFile('package.json', 'utf8')) as PackageMetadata;
+const policy = JSON.parse(await readFile('repo-policy.json', 'utf8')) as RepoPolicy;
 const readme = await readFile('README.md', 'utf8');
 const readmeJa = await readFile('README.ja.md', 'utf8');
 const changelog = await readFile('CHANGELOG.md', 'utf8');
@@ -57,8 +110,9 @@ function checkPolicy() {
 }
 
 function checkPackageMetadata() {
-  for (const key of ['description', 'author', 'license', 'homepage', 'packageManager']) {
-    if (typeof packageMetadata[key] !== 'string' || packageMetadata[key].trim().length === 0) {
+  for (const key of ['description', 'author', 'license', 'homepage', 'packageManager'] as const) {
+    const value = packageMetadata[key];
+    if (typeof value !== 'string' || value.trim().length === 0) {
       errors.push(`package.json ${key} must be a non-empty string`);
     }
   }
@@ -66,7 +120,7 @@ function checkPackageMetadata() {
   if (packageMetadata.homepage !== 'https://kubohiroya.github.io/turbowarp-webusb-pasori/') {
     errors.push('package.json homepage must point to the Pages user guide');
   }
-  if (packageMetadata.engines?.node !== '>=22') errors.push('package.json engines.node must be >=22');
+  if (packageMetadata.engines?.node !== '>=22.18.0') errors.push('package.json engines.node must be >=22.18.0');
   if (packageMetadata.packageManager !== 'pnpm@11.11.0') {
     errors.push('package.json packageManager must pin pnpm@11.11.0');
   }
@@ -174,7 +228,11 @@ async function checkPackContents() {
     '--ignore-scripts',
     '--json'
   ]);
-  const [pack] = JSON.parse(stdout);
+  const [pack] = JSON.parse(stdout) as PackResult[];
+  if (!pack) {
+    errors.push('npm pack must report a package');
+    return;
+  }
   const files = new Set(pack.files.map((file) => file.path));
   for (const file of [
     'README.md',

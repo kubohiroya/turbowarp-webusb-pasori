@@ -33,13 +33,13 @@ provide general NFC, NDEF payload, or transit-card history access.
 For package-based tooling:
 
 ```bash
-pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.2.0
+pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.3.0
 ```
 
 For direct TurboWarp loading:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.2.0/dist/webusb-pasori.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.3.0/dist/webusb-pasori.js
 ```
 
 ## Quick start
@@ -166,11 +166,10 @@ pnpm run dev
 - `src/config.ts`: extension metadata
 - `src/block-definitions.json`: canonical block metadata used by both the extension and README generator
 - `src/extension.ts`: extension implementation
-- `src/extension-manifest.ts`: canonical manifest generator and Vite output plugin
 - `src/index.ts`: extension registration entry point
 - `src/globals.d.ts`: Scratch API declarations used by the project
-- `schemas/extension-manifest.schema.json`: JSON Schema for the generated API contract
-- `scripts/generate-readme.mjs`: updates the generated README block section
+- the manifest generator and its JSON Schema come from [`@kubohiroya/turbowarp-extension-manifest`](https://github.com/kubohiroya/turbowarp-extension-manifest)
+- `scripts/generate-readme.ts`: updates the generated README block section
 - `tests/`: unit tests
 - `vite.config.ts`: TurboWarp-compatible Vite build configuration
 - `dist/`: tracked TurboWarp JavaScript and extension API manifest
@@ -181,7 +180,7 @@ Each build emits `dist/extension-manifest.json` with `formatVersion: 1`. It reco
 block opcodes and types, argument IDs and types, and menu references in a deterministic order. Tools
 such as `sb3-toolchain` can compare this contract before updating an embedded extension or migrating
 its ID. See [the architecture document](docs/architecture.md) and the
-[JSON Schema](schemas/extension-manifest.schema.json) for the v1 contract.
+[JSON Schema](https://github.com/kubohiroya/turbowarp-extension-manifest/blob/main/schemas/extension-manifest.schema.json) for the v1 contract.
 
 After changing runtime or block metadata, regenerate and verify the tracked release artifacts:
 
