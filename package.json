@@ -1,6 +1,6 @@
 {
   "name": "@kubohiroya/turbowarp-webusb-pasori",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
   "license": "MPL-2.0",
   "description": "A TurboWarp capability extension for reading Sony PaSoRi NFC card IDs through WebUSB.",
@@ -51,8 +51,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
-    "@kubohiroya/turbowarp-extension-manifest": "0.2.0",
-    "@kubohiroya/vite-plugin-turbowarp-extension": "0.4.0",
+    "@kubohiroya/turbowarp-extension-manifest": "0.3.2",
+    "@kubohiroya/vite-plugin-turbowarp-extension": "0.6.1",
     "@types/node": "^24.13.3",
     "eslint": "^9.39.5",
     "typescript": "^5.9.3",
@@ -67,5 +67,11 @@
     "nfc",
     "pasori",
     "webusb"
-  ]
+  ],
+  "gitHead": "26d40ea77fa7a5e0d42935d7e1c8c13c265c8cad",
+  "x-turbowarp-source": {
+    "revision": "26d40ea77fa7a5e0d42935d7e1c8c13c265c8cad",
+    "revisionRole": "base-commit",
+    "sourceState": "working-tree-release-overlay"
+  }
 }
