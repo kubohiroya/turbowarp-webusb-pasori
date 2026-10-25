@@ -38,5 +38,9 @@ const idm = await pasori.waitForNfcIdm({readerId: 'left', signal});</code></pre>
     <section class="section" id="limits"><h2>要件と制約</h2><p class="note">この拡張はSony PaSoRiのカードID読み取りに範囲を絞っています。WebUSBには安全なコンテキスト、browser support、user gesture、device permissionが必要です。OSドライバやブラウザの保護インターフェイス制限により`claimInterface(0)`が失敗する環境があります。</p></section>
   </main>
   <footer>Source: <a href="https://github.com/kubohiroya/turbowarp-webusb-pasori">GitHub</a></footer>
+<!-- The shared TurboWarp Plus header. It inserts itself at the top of the
+     page in a shadow root, so it cannot disturb the styles below. -->
+<script type="module"
+        src="https://kubohiroya.github.io/turbowarp-plus-site-header/dist/auto.js"></script>
 </body>
 </html>
