@@ -143,6 +143,7 @@ export class WebUsbPasoriExtension implements TurboWarpExtension {
     return {
       id: extensionConfig.id,
       docsURI: 'https://kubohiroya.github.io/turbowarp-webusb-pasori/',
+      blockIconURI: extensionConfig.blockIconURI,
       name: Scratch.translate(definitions.extensionName),
       blocks: blockDefinitions.map((block) => this.toScratchBlock(block))
     };
