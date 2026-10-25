@@ -33,13 +33,13 @@ TurboWarp WebUSB PaSoRiは、Sony PaSoRiリーダーからWebUSB経由でNFCカ�
 package-based toolingで使う場合:
 
 ```bash
-pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.3.1
+pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.4.0
 ```
 
 TurboWarpへ直接読み込む場合:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.3.1/dist/webusb-pasori.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.4.0/dist/webusb-pasori.js
 ```
 
 ## Quick start
