@@ -1,5 +1,7 @@
 # TurboWarp-WebUSB-PaSoRi
 
+<img src="assets/block-icon.svg" alt="" width="48" height="48">
+
 [日本語](README.ja.md)
 
 TurboWarp-WebUSB-PaSoRi is a TurboWarp capability extension for reading NFC card
