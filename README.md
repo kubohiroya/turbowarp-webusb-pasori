@@ -1,10 +1,10 @@
-# TurboWarp-WebUSB-PaSoRi
+# TurboWarp WebUSB PaSoRi
 
 <img src="assets/block-icon.svg" alt="" width="48" height="48">
 
 [日本語](README.ja.md)
 
-TurboWarp-WebUSB-PaSoRi is a TurboWarp capability extension for reading NFC card
+TurboWarp WebUSB PaSoRi is a TurboWarp capability extension for reading NFC card
 IDm and PMm values from Sony PaSoRi readers through WebUSB.
 
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-webusb-pasori/)** ·
