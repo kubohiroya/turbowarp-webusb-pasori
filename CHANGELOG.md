@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 - 2026-10-26
+
+- 公開済みのvite-plugin-turbowarp-extension 0.8.0へ追従し、lockfileと配布bundleを更新します。
+- npm/CDNの利用例とリリース差分の基点情報を更新します。
+- WebUSB PaSoRiのruntime API、拡張ID、opcode、reader所有権とIDm待機の契約を維持します。
+- 切り戻しは`@kubohiroya/turbowarp-webusb-pasori@0.3.1`への固定です。
+
 ## 0.3.1 - 2026-10-19
 
 - Publish the selected Git source with explicit base revision metadata and exact latest internal npm dependencies.
