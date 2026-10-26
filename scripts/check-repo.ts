@@ -100,7 +100,7 @@ function checkPolicy() {
   if (policy.homepage !== 'pages') {
     errors.push('repo-policy.json homepage must record Pages as the user entrypoint');
   }
-  if (policy.node?.minimum !== '22') errors.push('repo-policy.json node.minimum must be 22');
+  if (policy.node?.minimum !== '24') errors.push('repo-policy.json node.minimum must be 24');
   if (policy.extension?.id !== 'kubohiroyawebusbpasori') {
     errors.push('repo-policy.json must retain the WebUSB PaSoRi extension ID');
   }
@@ -120,9 +120,9 @@ function checkPackageMetadata() {
   if (packageMetadata.homepage !== 'https://kubohiroya.github.io/turbowarp-webusb-pasori/') {
     errors.push('package.json homepage must point to the Pages user guide');
   }
-  if (packageMetadata.engines?.node !== '>=22.18.0') errors.push('package.json engines.node must be >=22.18.0');
-  if (packageMetadata.packageManager !== 'pnpm@11.11.0') {
-    errors.push('package.json packageManager must pin pnpm@11.11.0');
+  if (packageMetadata.engines?.node !== '>=24') errors.push('package.json engines.node must be >=24');
+  if (packageMetadata.packageManager !== 'pnpm@11.28.8') {
+    errors.push('package.json packageManager must pin pnpm@11.28.8');
   }
   for (const file of ['dist/', 'CHANGELOG.md', 'README.md', 'README.ja.md', 'LICENSE']) {
     if (!packageMetadata.files?.includes(file)) errors.push(`package.json files must include ${file}`);
