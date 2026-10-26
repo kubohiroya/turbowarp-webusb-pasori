@@ -6,9 +6,9 @@
   "description": "A TurboWarp capability extension for reading Sony PaSoRi NFC card IDs through WebUSB.",
   "type": "module",
   "homepage": "https://kubohiroya.github.io/turbowarp-webusb-pasori/",
-  "packageManager": "pnpm@11.11.0",
+  "packageManager": "pnpm@11.28.8",
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=24"
   },
   "repository": {
     "type": "git",
