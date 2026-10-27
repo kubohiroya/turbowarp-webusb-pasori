@@ -1,0 +1,42 @@
+{
+  "baseURL": "https://kubohiroya.github.io/turbowarp-webusb-pasori/",
+  "extension": {
+    "id": "kubohiroyawebusbpasori",
+    "bundle": "dist/webusb-pasori.js",
+    "unsandboxed": true,
+    "dependencies": [
+      {
+        "id": "lmsTempVars2",
+        "url": "https://extensions.turbowarp.org/Lily/TempVariables2.js"
+      }
+    ]
+  },
+  "assets": [],
+  "samples": [
+    {
+      "name": "read-one-nfc-idm",
+      "title": "PaSoRi: manual hardware demo",
+      "instructions": "Connect and Read require your PaSoRi/card. C clears IDm; close tab to release USB.",
+      "checks": [
+        {
+          "variable": "sample-connected",
+          "equals": 0
+        },
+        {
+          "variable": "sample-idm",
+          "equals": ""
+        }
+      ],
+      "requirements": [
+        "WebUSB対応HTTPSブラウザ・Sony PaSoRi・対応する利用者自身のカード",
+        "明示クリック/USB機器選択・OSドライバー・claimInterface権限",
+        "公式Temporary Variablesを依存URLで記録",
+        "既存ブロックにabort/releaseがないためUSB待機終了/解放はタブを閉じる。Stopだけで完全解放とは表現しない"
+      ],
+      "unverified": [
+        "PaSoRi実機接続/USB許可/driver互換・実カードIDm読取",
+        "USB待機と実機解放。自動検証でUSB chooserやカード読取を開始しない"
+      ]
+    }
+  ]
+}

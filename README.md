@@ -10,6 +10,14 @@ IDm and PMm values from Sony PaSoRi readers through WebUSB.
 **[Open the user guide](https://kubohiroya.github.io/turbowarp-webusb-pasori/)** ·
 **[日本語ガイド](https://kubohiroya.github.io/turbowarp-webusb-pasori/ja/)**
 
+## Minimal demo
+
+[Open in TurboWarp Editor](https://turbowarp.org/editor?project_url=https%3A%2F%2Fkubohiroya.github.io%2Fturbowarp-webusb-pasori%2Fsamples%2Fread-one-nfc-idm.sb3) · [SB3](https://kubohiroya.github.io/turbowarp-webusb-pasori/samples/read-one-nfc-idm.sb3)
+
+Requires a WebUSB HTTPS desktop browser, Sony PaSoRi, compatible OS driver/interface permissions, and your own supported NFC card. Official Temporary Variables is a declared dependency. Tests cover zero readers, Read-before-connect, clearing and rerun only; physical USB selection/claimInterface, card read and physical release are unverified. Existing blocks have no disconnect or abort input: Stop alone does not cancel a pending USB poll or close a retained device. Close the browser tab to end it. C clears the displayed/runtime value but the extension lastIdm cache remains until reload. Do not save/export the running project after reading a personal ID; distribute the generated empty SB3. No NFC write, lock command, microphone or audio is used. Cancellation/rejection may stop the clicked script; connected count remains zero and browser/Scratch console contains the error.
+
+[Editable source and regeneration](samples/README.md)
+
 ## What it does
 
 - Connects one or more Sony PaSoRi readers with project-local names such as `left` or `right`.

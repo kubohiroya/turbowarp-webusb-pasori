@@ -1,0 +1,753 @@
+{
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Stage",
+      "variables": {
+        "sample-state": [
+          "State",
+          ""
+        ],
+        "sample-status": [
+          "Status",
+          ""
+        ],
+        "sample-connected": [
+          "Connected readers",
+          ""
+        ],
+        "sample-idm": [
+          "Card IDm",
+          ""
+        ]
+      },
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "b1": {
+          "opcode": "event_whenflagclicked",
+          "parent": null,
+          "next": "b2",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 35,
+          "y": 35
+        },
+        "b2": {
+          "opcode": "data_setvariableto",
+          "parent": "b1",
+          "next": "b3",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Running"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "sample-state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b3": {
+          "opcode": "data_setvariableto",
+          "parent": "b2",
+          "next": "b5",
+          "inputs": {
+            "VALUE": [
+              3,
+              "b4",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Connected readers",
+              "sample-connected"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b4": {
+          "opcode": "kubohiroyawebusbpasori_connectedPasoriCount",
+          "parent": "b3",
+          "next": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b5": {
+          "opcode": "data_setvariableto",
+          "parent": "b3",
+          "next": "b6",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Card IDm",
+              "sample-idm"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b6": {
+          "opcode": "lmsTempVars2_setRuntimeVariable",
+          "parent": "b5",
+          "next": "b7",
+          "inputs": {
+            "VAR": [
+              1,
+              [
+                10,
+                "sample-nfc-idm"
+              ]
+            ],
+            "STRING": [
+              1,
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b7": {
+          "opcode": "data_setvariableto",
+          "parent": "b6",
+          "next": "b8",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Idle: Connect and Read are manual"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b8": {
+          "opcode": "data_setvariableto",
+          "parent": "b7",
+          "next": null,
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Ready"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "sample-state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b9": {
+          "opcode": "event_whenkeypressed",
+          "parent": null,
+          "next": "b10",
+          "inputs": {},
+          "fields": {
+            "KEY_OPTION": [
+              "c",
+              null
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 35,
+          "y": 500
+        },
+        "b10": {
+          "opcode": "data_setvariableto",
+          "parent": "b9",
+          "next": "b11",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Card IDm",
+              "sample-idm"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b11": {
+          "opcode": "lmsTempVars2_setRuntimeVariable",
+          "parent": "b10",
+          "next": "b12",
+          "inputs": {
+            "VAR": [
+              1,
+              [
+                10,
+                "sample-nfc-idm"
+              ]
+            ],
+            "STRING": [
+              1,
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b12": {
+          "opcode": "data_setvariableto",
+          "parent": "b11",
+          "next": null,
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Display cleared; close tab to release USB"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "",
+          "name": "Instructions",
+          "bitmapResolution": 1,
+          "md5ext": "backdrop.svg",
+          "dataFormat": "svg",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 0,
+      "tempo": 60,
+      "videoTransparency": 50,
+      "videoState": "off",
+      "textToSpeechLanguage": null
+    },
+    {
+      "isStage": false,
+      "name": "Connect",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "b13": {
+          "opcode": "event_whenthisspriteclicked",
+          "parent": null,
+          "next": "b14",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 35,
+          "y": 35
+        },
+        "b14": {
+          "opcode": "data_setvariableto",
+          "parent": "b13",
+          "next": "b15",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Choose / cancel reader in browser"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b15": {
+          "opcode": "kubohiroyawebusbpasori_connectPasoriBlock",
+          "parent": "b14",
+          "next": "b16",
+          "inputs": {
+            "READER_ID": [
+              1,
+              [
+                10,
+                "sample-reader"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b16": {
+          "opcode": "data_setvariableto",
+          "parent": "b15",
+          "next": "b18",
+          "inputs": {
+            "VALUE": [
+              3,
+              "b17",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Connected readers",
+              "sample-connected"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b17": {
+          "opcode": "kubohiroyawebusbpasori_connectedPasoriCount",
+          "parent": "b16",
+          "next": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b18": {
+          "opcode": "data_setvariableto",
+          "parent": "b16",
+          "next": null,
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Connected: click Read for own card"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "",
+          "name": "Demo",
+          "bitmapResolution": 1,
+          "md5ext": "connect.svg",
+          "dataFormat": "svg",
+          "rotationCenterX": 70,
+          "rotationCenterY": 22
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 1,
+      "visible": true,
+      "x": -105,
+      "y": -65,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "Read",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "b19": {
+          "opcode": "event_whenthisspriteclicked",
+          "parent": null,
+          "next": "b20",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 35,
+          "y": 35
+        },
+        "b20": {
+          "opcode": "data_setvariableto",
+          "parent": "b19",
+          "next": "b22",
+          "inputs": {
+            "VALUE": [
+              3,
+              "b21",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Connected readers",
+              "sample-connected"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b21": {
+          "opcode": "kubohiroyawebusbpasori_connectedPasoriCount",
+          "parent": "b20",
+          "next": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b22": {
+          "opcode": "data_setvariableto",
+          "parent": "b20",
+          "next": "b23",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Connect a reader first"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b23": {
+          "opcode": "control_if",
+          "parent": "b22",
+          "next": null,
+          "inputs": {
+            "CONDITION": [
+              3,
+              "b24",
+              [
+                10,
+                ""
+              ]
+            ],
+            "SUBSTACK": [
+              2,
+              "b26"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b24": {
+          "opcode": "operator_gt",
+          "parent": "b23",
+          "next": null,
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "b25",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "0"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b25": {
+          "opcode": "data_variable",
+          "parent": "b24",
+          "next": null,
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Connected readers",
+              "sample-connected"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b26": {
+          "opcode": "data_setvariableto",
+          "parent": "b23",
+          "next": "b27",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Waiting for your NFC card; close tab to abort"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b27": {
+          "opcode": "kubohiroyawebusbpasori_waitForNfcIdmSetRuntimeVar",
+          "parent": "b26",
+          "next": "b28",
+          "inputs": {
+            "READER_ID": [
+              1,
+              [
+                10,
+                "sample-reader"
+              ]
+            ],
+            "RUNTIME_VAR": [
+              1,
+              [
+                10,
+                "sample-nfc-idm"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b28": {
+          "opcode": "data_setvariableto",
+          "parent": "b27",
+          "next": "b30",
+          "inputs": {
+            "VALUE": [
+              3,
+              "b29",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Card IDm",
+              "sample-idm"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "b29": {
+          "opcode": "kubohiroyawebusbpasori_lastIdmReporter",
+          "parent": "b28",
+          "next": null,
+          "inputs": {
+            "READER_ID": [
+              1,
+              [
+                10,
+                "sample-reader"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "b30": {
+          "opcode": "data_setvariableto",
+          "parent": "b28",
+          "next": null,
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Read complete; C clears display"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Status",
+              "sample-status"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "",
+          "name": "Demo",
+          "bitmapResolution": 1,
+          "md5ext": "read.svg",
+          "dataFormat": "svg",
+          "rotationCenterX": 70,
+          "rotationCenterY": 22
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 1,
+      "visible": true,
+      "x": 105,
+      "y": -65,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    }
+  ],
+  "monitors": [
+    {
+      "id": "sample-status",
+      "mode": "default",
+      "opcode": "data_variable",
+      "params": {
+        "VARIABLE": "Status"
+      },
+      "spriteName": null,
+      "value": "",
+      "width": 0,
+      "height": 0,
+      "x": 18,
+      "y": 105,
+      "visible": true,
+      "sliderMin": 0,
+      "sliderMax": 100,
+      "isDiscrete": true
+    },
+    {
+      "id": "sample-connected",
+      "mode": "default",
+      "opcode": "data_variable",
+      "params": {
+        "VARIABLE": "Connected readers"
+      },
+      "spriteName": null,
+      "value": "",
+      "width": 0,
+      "height": 0,
+      "x": 18,
+      "y": 132,
+      "visible": true,
+      "sliderMin": 0,
+      "sliderMax": 100,
+      "isDiscrete": true
+    },
+    {
+      "id": "sample-idm",
+      "mode": "default",
+      "opcode": "data_variable",
+      "params": {
+        "VARIABLE": "Card IDm"
+      },
+      "spriteName": null,
+      "value": "",
+      "width": 0,
+      "height": 0,
+      "x": 18,
+      "y": 159,
+      "visible": true,
+      "sliderMin": 0,
+      "sliderMax": 100,
+      "isDiscrete": true
+    }
+  ],
+  "extensions": [],
+  "meta": {
+    "semver": "3.0.0",
+    "vm": "0.2.0",
+    "agent": "TurboWarp Plus minimal samples"
+  }
+}
