@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 - 2026-10-28
+
+- Pagesで動作するsamplesデモを追加しました。npm公開物のAPI・拡張ID・既定値は変わりません。
+
 ## 0.5.0 - 2026-10-27
 
 - 共通manifest 0.4.0とvite-plugin-turbowarp-extension 0.9.0へ追従し、lockfileと公開版・利用例を更新します。
