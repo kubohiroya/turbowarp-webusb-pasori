@@ -45,10 +45,13 @@
     "docs:check": "node scripts/generate-readme.ts --check",
     "docs:pages:check": "node scripts/check-pages.ts",
     "repo:check": "node scripts/check-repo.ts",
-    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist && pnpm run repo:check",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run docs:check && pnpm run docs:pages:check && pnpm run check:dist && pnpm run repo:check && pnpm run samples:check",
     "check:dist": "pnpm run build && node scripts/check-dist.ts",
     "release:check": "pnpm publish --dry-run --access public --no-git-checks",
-    "prepack": "pnpm run check"
+    "prepack": "pnpm run check",
+    "samples:build": "node scripts/build-samples.mjs",
+    "samples:check": "node scripts/build-samples.mjs --check && node --test scripts/verify-samples.mjs",
+    "pages:build": "node scripts/prepare-pages.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
