@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 - 2026-10-27
+
+- 共通manifest 0.4.0とvite-plugin-turbowarp-extension 0.9.0へ追従し、lockfileと公開版・利用例を更新します。
+- WebUSB PaSoRiのruntime API、拡張ID、opcode、reader所有権とIDm待機の契約を維持します。
+- 切り戻しは`@kubohiroya/turbowarp-webusb-pasori@0.4.0`への固定です。
+
 ## 0.4.0 - 2026-10-26
 
 - 公開済みのvite-plugin-turbowarp-extension 0.8.0へ追従し、lockfileと配布bundleを更新します。
