@@ -43,13 +43,13 @@ provide general NFC, NDEF payload, or transit-card history access.
 For package-based tooling:
 
 ```bash
-pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.5.1
+pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.6.0
 ```
 
 For direct TurboWarp loading:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.5.1/dist/webusb-pasori.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.6.0/dist/webusb-pasori.js
 ```
 
 ## Quick start
