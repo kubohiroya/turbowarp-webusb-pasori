@@ -45,13 +45,13 @@ WebUSB対応HTTPSブラウザでConnectを明示クリックし、自分のPaSoR
 package-based toolingで使う場合:
 
 ```bash
-pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.6.0
+pnpm add --save-exact @kubohiroya/turbowarp-webusb-pasori@0.6.1
 ```
 
 TurboWarpへ直接読み込む場合:
 
 ```text
-https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.6.0/dist/webusb-pasori.js
+https://cdn.jsdelivr.net/npm/@kubohiroya/turbowarp-webusb-pasori@0.6.1/dist/webusb-pasori.js
 ```
 
 ## Quick start
