@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1 - 2026-10-30
+
+- NFCカードを大きくし、カード内のNFC表記を読みやすくしました。配布SVGと実行時アイコンに同じ図案を使います。
+- 拡張ID・opcode・実行ロジック・依存は維持します。
+- ロールバック: `@kubohiroya/turbowarp-webusb-pasori@0.6.0` へ固定して利用します。
+
 ## 0.6.0 - 2026-10-29
 
 - 製作者情報を name: `Hiroya Kubo`、email: `hiroya@cuc.ac.jp`、url: `https://github.com/kubohiroya` のオブジェクトへ統一。
