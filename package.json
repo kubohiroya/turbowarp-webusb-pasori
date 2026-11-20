@@ -1,6 +1,6 @@
 {
   "name": "@kubohiroya/turbowarp-webusb-pasori",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": {
     "name": "Hiroya Kubo",
     "email": "hiroya@cuc.ac.jp",
@@ -81,5 +81,20 @@
     "revision": "d9cdd72dfc766982394516d657a2adb64b09dc51",
     "revisionRole": "base-commit",
     "sourceState": "working-tree-release-overlay"
+  },
+  "turbowarpExtension": {
+    "resourceDeclaration": {
+      "schemaVersion": 1,
+      "resources": [
+        {
+          "type": "usb",
+          "usage": "required",
+          "purpose": {
+            "en": "Connect to the selected PaSoRi reader and read NFC card identifiers",
+            "ja": "選択したPaSoRiリーダーへ接続し、NFCカードの識別情報を読み取る"
+          }
+        }
+      ]
+    }
   }
 }
