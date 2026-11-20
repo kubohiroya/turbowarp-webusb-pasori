@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1 - 2026-11-21
+
+- パッケージにリソース利用宣言を追加。切り戻しは `@kubohiroya/turbowarp-webusb-pasori@0.7.0` に固定。
+
 ## 0.7.0 - 2026-11-07
 
 - ビルド依存を vite-plugin 0.11.0 に更新。
