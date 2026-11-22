@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 - 2026-11-22
+
+- family依存を更新（`turbowarp-extension-manifest` ^0.6.0）。切り戻しは `@kubohiroya/turbowarp-webusb-pasori@0.7.0` に固定。
+
 ## 0.7.1 - 2026-11-21
 
 - パッケージにリソース利用宣言を追加。切り戻しは `@kubohiroya/turbowarp-webusb-pasori@0.7.0` に固定。
